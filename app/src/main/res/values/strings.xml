@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Golden Gate Desktop</string>
+    <string name="app_subtitle">macOS 27 inspired desktop for Android</string>
+    <string name="home_role_label">Golden Gate Desktop</string>
+</resources>

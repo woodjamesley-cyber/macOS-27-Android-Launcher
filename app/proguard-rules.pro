@@ -1,0 +1,2 @@
+-keep class com.goldengate.desktop.** { *; }
+-dontwarn org.jetbrains.annotations.**
