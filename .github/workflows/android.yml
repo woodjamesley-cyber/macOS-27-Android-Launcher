@@ -63,7 +63,12 @@ jobs:
           APK="app/build/outputs/apk/debug/app-debug.apk"
           BT="$ANDROID_HOME/build-tools/35.0.0"
           "$BT/aapt2" dump badging "$APK" | grep -E "^package:|targetSdkVersion|application-label:"
-          "$BT/aapt2" dump xmltree "$APK" AndroidManifest.xml | grep -c "android.intent.category.HOME"
+          COUNT=$("$BT/aapt2" dump xmltree --file AndroidManifest.xml "$APK" | grep -c "android.intent.category.HOME" || true)
+          echo "HOME intent filter entries: $COUNT"
+          if [ "$COUNT" -lt 1 ]; then
+            echo "::error::Packaged manifest is missing android.intent.category.HOME — this cannot be a Home app."
+            exit 1
+          fi
           ls -lh "$APK"
 
       - name: Collect APKs
@@ -98,5 +103,4 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: artifacts/*.apk
-          generate_release_notes: true
           fail_on_unmatched_files: false
